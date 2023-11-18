@@ -1,5 +1,8 @@
+const join = require('./joinFunc.js');
+
 function splice(array, index, lengthToRemove, ...rest) {
-    if (index < 0) return negativeIndexOnSplice(array, index);
+    const isString = typeof array === 'string';
+    if (index < 0) return isString ? join(negativeIndexOnSplice(array, index)) : negativeIndexOnSplice(array, index);
 
     const newArray = [];
 
@@ -18,25 +21,23 @@ function splice(array, index, lengthToRemove, ...rest) {
         newArray[indexToNewArray] = array[i];
     }
 
-    return newArray
+    return isString ? join(newArray) : newArray;
 }
 
 function negativeIndexOnSplice(array, index) {
     const newArray = [];
     const initialIndex = array.length + index;
     for (let i = initialIndex; i < array.length; i++) {
-        // console.log(array[i])
         newArray[i - initialIndex] = array[i];
     }
     return newArray
 }
-
 
 console.log('SPLICE:');
 
 const myArray = [2, 3, 41, 5, 1, 6, 7, 4, 90, 438, 32];
 console.log(myArray);
 
-const newArray = splice("Oi meu nome é ramon", 2);
+const newArray = splice(myArray, 2);
 
 console.log(newArray)
